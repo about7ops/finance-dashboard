@@ -1,3 +1,7 @@
 node_modules/
 .env
 DAILYSUMMARY.md
+/generated/prisma
+.agents
+.claude
+.windsurf
