@@ -41,11 +41,4 @@ exports.register = async (req, res) => {
             error: error.message
         })
     }
-}
-
-// Receives: id, name, email, password, createdAt and updatedAt
-// checks if user already exists
-// hashes password w/ bcrypt
-// prisma.create (?)
-// 200 success
-// 400 error
+};

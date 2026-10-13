@@ -1,14 +1,12 @@
 const express = require('express');
 const app = express();
-const userAuth = require('./routes/userAuthRoutes');
 const PORT = 3000;
+const userAuth = require('./routes/authRoutes');
 
-app.get('/', (req, res) => {
-  res.send('Hello, World!');
-  console.log('Response: ', res);
-});
+// Register middleware before routes
+app.use(express.json());
 
-app.use('/userAuthRoutes', userAuth);
+app.use('/auth', userAuth);
 
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
