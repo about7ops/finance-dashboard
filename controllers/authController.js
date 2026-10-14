@@ -29,9 +29,12 @@ exports.register = async (req, res) => {
                 data: { name, email, password: hashedPassword }
             });
 
+            // Strip password before sending response
+            const { password: _, ...userWithoutPassword } = newUser;
+
             res.status(201).json({
                 success: true,
-                data: newUser
+                data: userWithoutPassword
             })
         }
     }
