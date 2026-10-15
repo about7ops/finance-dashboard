@@ -19,20 +19,25 @@ exports.login = async (req, res) => {
         const { email, password } = req.body;
         
         // Verify email exists
-        const uniqueEmail = await prisma.user.findUnique({
+        const existingUser = await prisma.user.findUnique({
             where: { email: email },
         });
 
-        if (!uniqueEmail) {
-            res.status(400).json({
+        if (!existingUser) {
+            return res.status(400).json({
                 success: false,
                 error: 'Error logging in'
             });
         }
 
         // Verify password matches email
-        if (uniqueEmail) {
-            const match = await bcrypt.compare(plainPassword, storedHash);
+        const match = await bcrypt.compare(password, existingUser.password);
+
+        if (!match) {
+            return res.status(400).json({
+                success: false,
+                error: 'Error logging in'
+            });
         }
 
     } catch (error) {
