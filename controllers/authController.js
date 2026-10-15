@@ -1,6 +1,7 @@
 const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
 const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
 const saltRounds = 10;
 
 /* login flow notes:
@@ -39,6 +40,8 @@ exports.login = async (req, res) => {
                 error: 'Error logging in'
             });
         }
+
+        const token = jwt.sign( {id: existingUser.id }, process.env.JWT_SECRET, { expiresIn: '7d' });
 
     } catch (error) {
         res.status(400).json({
